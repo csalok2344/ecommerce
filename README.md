@@ -56,3 +56,5 @@ In this website we have used core java,spring framework,HTML and Inline CSS.
 
 ![image alt](https://github.com/csalok2344/ecommerce/blob/d8ba05b71ceb388fa9a20757da477c0851bd6a51/Screenshot%202025-08-28%20013533.png)
 
+![image alt](https://github.com/csalok2344/ecommerce/blob/cc58f31147471d204d9bf2b244093da0028c24dc/Screenshot%202025-08-28%20013600.png)
+
