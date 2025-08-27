@@ -36,10 +36,14 @@ Each of these areas ensures a robust, future-proof ecommerce project that delive
 
 Epic 1: Product Search Improvement
 As a customer, I want a fast and accurate search feature so I can easily find products.
+
 User Story 1: As a customer, I want to filter products by category and price so that I can narrow down my search results efficiently.
+
 User Story 2: As a customer, I want to see suggested products as I type in the search box so that I can quickly discover relevant items.
+
 Epic 2: Checkout Experience Enhancement
 As a customer, I want a seamless and secure checkout process so that buying products feels simple and trustworthy
+
 User Story 3: As a customer, I want to save my delivery addresses so I can check out faster on future purchases.
 Each epic represents a larger goal, and its user stories break down specific tasks for development teams to deliver value to users.
 
