@@ -45,3 +45,5 @@ Each epic represents a larger goal, and its user stories break down specific tas
 
 Here in this ecommerce website I have tried  to address the most of problems of Users and Admins.
 In this website we have used core java,spring framework,HTML and Inline CSS.
+
+![image alt](https://github.com/csalok2344/ecommerce/blob/b64413a3d7f581e4bdc83e5fe9f823380097285d/Screenshot%202025-08-28%20013347.png)
