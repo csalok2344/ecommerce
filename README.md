@@ -47,3 +47,5 @@ Here in this ecommerce website I have tried  to address the most of problems of 
 In this website we have used core java,spring framework,HTML and Inline CSS.
 
 ![image alt](https://github.com/csalok2344/ecommerce/blob/b64413a3d7f581e4bdc83e5fe9f823380097285d/Screenshot%202025-08-28%20013347.png)
+
+![image alt](https://github.com/csalok2344/ecommerce/blob/7b8ae65daec397db90ccbdc9d726d49f2e3c980c/Screenshot%202025-08-28%20013411.png)
