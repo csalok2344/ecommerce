@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Your Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <style>
+        body {
+            background: linear-gradient(130deg, #fafaff 0%, #e0e2f3 100%);
+            min-height: 100vh;
+            padding: 30px 10px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .container-custom {
+            max-width: 900px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 28px rgba(81, 89, 136, 0.15);
+            padding: 38px 30px 36px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+            font-weight: 700;
+            color: #3e3c72;
+            letter-spacing: 1.4px;
+            margin-bottom: 34px;
+            font-size: 2.2rem;
+        }
+        .btn-back {
+            display: inline-block;
+            margin-bottom: 38px;
+            padding: 12px 28px;
+            border-radius: 24px;
+            font-weight: 600;
+            color: #5360a2;
+            background: #e4e7f8;
+            box-shadow: 0 1px 8px #c9cef9;
+            transition: background 0.3s ease, color 0.3s ease;
+            text-decoration: none;
+        }
+        .btn-back:hover {
+            background: #d3daf5;
+            color: #394aab;
+            text-decoration: none;
+            box-shadow: 0 3px 12px #a3aed7;
+        }
+        .order-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: #37417b;
+            background: linear-gradient(90deg,#829af9 0%, #bac9f7 100%);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 16px;
+            color: #222;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .order-header span, .order-header strong {
+            color: inherit;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .order-header .separator {
+            color: #7b82b2;
+            user-select: none;
+        }
+        .list-group-item-custom {
+            background: transparent;
+            border: none;
+            padding: 10px 0;
+            font-size: 16px;
+            border-bottom: 1px dashed #d0d4e8;
+            color: #3c3c6f;
+            white-space: nowrap;
+        }
+        .list-group-item-custom span.name {
+            font-weight: 600;
+        }
+        .list-group-item-custom span.price, .list-group-item-custom span.quantity {
+            font-weight: 700;
+        }
+        .list-group-item-custom span.separator {
+            margin: 0 6px;
+            color: #7a7a9c;
+            font-weight: normal;
+        }
+        @media (max-width: 576px) {
+            .order-header {
+                flex-direction: column;
+                font-size: 16px;
+                padding: 12px 16px;
+            }
+            th, tbody td {
+                font-size: 14px;
+                white-space: normal;
+            }
+            .btn-back {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-custom">
+    <h2>Your Orders</h2>
+    <a href="/user/dashboard" class="btn-back">&larr; Back to Dashboard</a>
+    <div th:each="order : ${orders}">
+        <div class="order-header">
+            <span>Order ID: <strong th:text="${order.id}"></strong></span>
+            <span class="separator">|</span>
+            <span>Date: <span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></span></span>
+            <span class="separator">|</span>
+            <span>Total: ₹ <strong th:text="${order.totalAmount}" style="color:#286641;"></strong></span>
+        </div>
+        <ul class="list-group list-group-flush" style="padding-left:0;">
+            <li class="list-group-item-custom" th:each="item : ${order.items}">
+                <span class="name" th:text="${item.product.name}"></span>
+                <span class="separator">-</span>
+                ₹<span class="price" th:text="${item.price}"></span>
+                <span class="separator">×</span>
+                <span class="quantity" th:text="${item.quantity}"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

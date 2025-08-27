@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>All Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <style>
+        body {
+            background: linear-gradient(120deg, #f5fafc 0%, #f8f0fc 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 15px;
+        }
+        .container-custom {
+            max-width: 950px;
+            margin: 0 auto 40px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 32px rgba(136, 118, 206, 0.1);
+            padding: 36px 28px 28px 28px;
+        }
+        h2 {
+            font-weight: 700;
+            color: #944bc5;
+            letter-spacing: 1.3px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.6rem;
+        }
+        a.btn-back {
+            display: inline-block;
+            padding: 12px 28px;
+            margin-bottom: 36px;
+            box-shadow: 0 1px 8px #deeafa;
+            background: #eee;
+            color: #8659a5;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 24px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        a.btn-back:hover {
+            background-color: #d8ccee;
+            color: #5e4180;
+            text-decoration: none;
+        }
+        .order-card {
+            background: #f8f7fa;
+            border-radius: 18px;
+            box-shadow: 0 3px 22px rgba(137, 117, 206, 0.09);
+            margin-bottom: 27px;
+            padding: 20px 22px;
+            border-left: 7px solid #d4beee;
+            transition: box-shadow 0.15s ease-in-out;
+            position: relative;
+        }
+        .order-card:hover {
+            box-shadow: 0 6px 28px rgba(137, 117, 206, 0.18);
+        }
+        .order-header {
+            background: linear-gradient(90deg, #b298dc 0%, #c9e7fa 100%);
+            border-radius: 14px 14px 0 0;
+            padding: 14px 20px;
+            margin: -20px -22px 20px -22px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #4a2c72;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            text-align: center;
+        }
+        .order-header span {
+            color: inherit;
+            white-space: nowrap;
+        }
+        .order-header span:not(:last-child)::after {
+            content: "|";
+            margin: 0 12px;
+            color: #7a549b;
+            user-select: none;
+        }
+        ul.list-group-flush {
+            margin-bottom: 8px;
+            background: transparent;
+            border: none;
+            padding-left: 0;
+            list-style: none;
+        }
+        ul.list-group-flush li {
+            background: transparent;
+            border: none;
+            padding: 8px 0 8px 0;
+            font-size: 16px;
+            border-bottom: 1px dashed #e5e1f0;
+            color: #3c3c6f;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            white-space: normal;
+        }
+        ul.list-group-flush li span.product-name {
+            font-weight: 500;
+            flex: 2 1 150px;
+            text-align: left;
+            min-width: 120px;
+        }
+        ul.list-group-flush li span.price {
+            font-weight: 700;
+            color: #026956;
+            flex: 1 1 90px;
+            text-align: center;
+        }
+        ul.list-group-flush li span.quantity {
+            font-weight: 600;
+            flex: 1 1 50px;
+            text-align: center;
+            color: #4a4a6a;
+        }
+        @media (max-width: 700px) {
+            .order-header {
+                font-size: 16px;
+                justify-content: flex-start;
+                gap: 10px;
+            }
+            ul.list-group-flush li {
+                flex-direction: column;
+                gap: 4px;
+                text-align: left;
+            }
+            ul.list-group-flush li span {
+                flex: 1 1 auto;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-custom">
+    <h2>All Orders</h2>
+    <a href="/admin/dashboard" class="btn-back">&larr; Back to Dashboard</a>
+
+    <div th:each="order : ${orders}" class="order-card">
+        <div class="order-header">
+            <span>Order ID: <strong th:text="${order.id}"></strong></span>
+            <span>User: <span th:text="${order.userEmail}"></span></span>
+            <span>Date: <span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></span></span>
+            <span>Total: <span style="color: #026956;">₹ <strong th:text="${order.totalAmount}"></strong></span></span>
+        </div>
+        <ul class="list-group-flush">
+            <li th:each="item : ${order.items}">
+                <span class="product-name" th:text="${item.product.name}"></span>
+                <span class="price">₹ <span th:text="${item.price}"></span></span>
+                <span class="quantity">× <span th:text="${item.quantity}"></span></span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

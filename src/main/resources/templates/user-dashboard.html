@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>User Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <style>
+        body {
+            background: linear-gradient(110deg, #f5f7ff 0%, #e3ecff 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .dashboard-container {
+            max-width: 1140px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(55, 71, 107, 0.14);
+            padding: 40px 34px;
+            margin: 0 auto;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .dashboard-header h2 {
+            font-weight: 700;
+            color: #2b3a96;
+            letter-spacing: 1.4px;
+            margin: 0 0 12px 0;
+            flex: 1 1 auto;
+        }
+        .btn-cart {
+            background: #ffb703;
+            border: none;
+            box-shadow: 0 4px 12px #f5a826bb;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 12px;
+            padding: 10px 22px;
+            transition: box-shadow 0.3s ease;
+            flex: 0 1 auto;
+            white-space: nowrap;
+        }
+        .btn-cart:hover {
+            box-shadow: 0 6px 20px #f4b631cc;
+            background: #f9b300;
+        }
+        .product-card {
+            border: 1.6px solid #dee3f7;
+            border-radius: 14px;
+            box-shadow: 0 4px 26px rgba(110, 120, 180, 0.12);
+            overflow: hidden;
+            background: #fefefe;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(110, 120, 180, 0.25);
+        }
+        .product-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #dee3f7;
+        }
+        .product-content {
+            padding: 16px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-title {
+            font-weight: 600;
+            color: #2e3a7c;
+            margin-bottom: 12px;
+            font-size: 1.15em;
+        }
+        .product-description {
+            color: #5c5f7b;
+            font-size: 14.8px;
+            flex-grow: 1;
+            margin-bottom: 18px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* maximum 3 lines */
+            -webkit-box-orient: vertical;
+        }
+        .product-price {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1d692b;
+            margin-bottom: 14px;
+        }
+        .product-availability {
+            font-size: 14px;
+            color: #8a92ac;
+            margin-bottom: 14px;
+        }
+        .btn-add, .btn-out-of-stock {
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .btn-add {
+            background: linear-gradient(90deg, #4c84ff 0%, #3a6bff 100%);
+            box-shadow: 0 5px 15px rgba(73, 105, 210, 0.4);
+            color: white;
+        }
+        .btn-add:hover {
+            background: linear-gradient(90deg, #3a6ae8 0%, #2f59df 100%);
+            box-shadow: 0 7px 23px rgba(50, 80, 170, 0.6);
+        }
+        .btn-out-of-stock {
+            background: #f3f3f3;
+            color: #aaa;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        @media (max-width: 991px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .btn-cart {
+                margin-top: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h2>User Dashboard</h2>
+        <a href="/user/cart" class="btn btn-warning btn-cart">
+            🛒 View Cart
+        </a>
+    </div>
+
+    <div class="row" style="margin-left: -12px; margin-right: -12px;">
+        <div class="col-md-4 mb-5" th:each="product : ${products}" style="padding: 0 12px;">
+            <div class="product-card">
+                <img th:src="@{'/images/' + ${product.imageName}}" alt="Product Image" class="product-image">
+
+                <div class="product-content">
+                    <h5 class="product-title" th:text="${product.name}"></h5>
+                    <p class="product-description" th:text="${product.description}"></p>
+                    <p class="product-price">
+                        ₹ <span th:text="${product.price}"></span>
+                    </p>
+
+                    <th:block th:with="reservedMap=${session.reservedStock},
+                              reservedQty=${reservedMap != null and reservedMap[product.id] != null ? reservedMap[product.id] : 0},
+                              availableStock=${product.stock - reservedQty}">
+
+                        <p class="product-availability">
+                            Available: <span th:text="${availableStock}"></span>
+                        </p>
+
+                        <a th:if="${availableStock > 0}" th:href="@{'/user/add-to-cart/' + ${product.id}}"
+                           class="btn btn-add btn-sm">
+                            Add to Cart
+                        </a>
+
+                        <button th:if="${availableStock <= 0}" class="btn btn-out-of-stock btn-sm" disabled>
+                            Out of Stock
+                        </button>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
